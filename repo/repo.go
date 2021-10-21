@@ -7,7 +7,7 @@ import (
 )
 
 type Database struct {
-	Database []entities.FlashCards
+	Database []entities.Flashcards
 }
 
 type Repo struct {
@@ -20,7 +20,7 @@ func NewRepo(f string) Repo{
 	}
 }
 
-func (r Repo) CreateFlashCard(f entities.FlashCards) error {
+func (r Repo) CreateFlashcard(f entities.Flashcards) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)

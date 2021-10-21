@@ -1,6 +1,6 @@
 package entities
 
-type FlashCards struct {
+type Flashcards struct {
 	Matching Matching
 	InfoOnly InfoOnly
 	QAndA QAndA

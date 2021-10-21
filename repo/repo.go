@@ -20,30 +20,30 @@ func NewRepo(f string) Repo{
 	}
 }
 
-func (r Repo) CreateFlashcard(f entities.Flashcards) error {
+func (r Repo) CreateFlashcard(f entities.Flashcards) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
 	if err != nil{
-		return err
+		return nil, err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
 	if err != nil{
-		return err
+		return nil, err
 	}
 
 	fcSlice.Database = append(fcSlice.Database, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil{
-		return err
+		return nil, err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
 	if err != nil{
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &fcSlice, nil
 }

@@ -2,11 +2,11 @@ package service
 
 import (
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
-	"github.com/google/uuid"
+	"github.com/gpark1005/FlashCardsTeamThree/repo"
 )
 
 type Repo interface {
-	CreateFlashcard (f entities.Flashcards) error
+	CreateFlashcard (f entities.Flashcards) (*repo.Database, error)
 }
 
 type Service struct {
@@ -19,6 +19,10 @@ func NewService(r Repo) Service {
 	}
 }
 
-func (s Service) CreateFlashcard (f entities.Flashcards) error {
-	s.Repo.CreateFlashcard(f)
+func (s Service) CreateFlashcard (f entities.Flashcards) (*repo.Database, error) {
+	db, err := s.Repo.CreateFlashcard(f)
+	if err != nil{
+		return nil, err
+	}
+	return db, nil
 }

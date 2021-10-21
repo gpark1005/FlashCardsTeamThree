@@ -21,6 +21,7 @@ type Answers struct {
 }
 
 type Matching struct {
+	Id string
 	Type string
 	Category string
 	Question Question
@@ -35,6 +36,7 @@ type InfoOnly struct {
 }
 
 type QAndA struct {
+	Id string
 	Type string
 	Category string
 	Question string
@@ -42,6 +44,7 @@ type QAndA struct {
 }
 
 type TorF struct {
+	Id string
 	Type string
 	Category string
 	Question string
@@ -49,6 +52,7 @@ type TorF struct {
 }
 
 type MultipleChoice struct {
+	Id string
 	Type string
 	Category string
 	Question string

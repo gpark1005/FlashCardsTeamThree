@@ -1,5 +1,13 @@
 package entities
 
+type FlashCards struct {
+	Matching Matching
+	InfoOnly InfoOnly
+	QAndA QAndA
+	TOrF TorF
+	MultipleChoice MultipleChoice
+}
+
 type Question struct {
 	Questions []string
 }

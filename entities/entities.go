@@ -4,7 +4,7 @@ type Flashcards struct {
 	Matching Matching
 	InfoOnly InfoOnly
 	QAndA QAndA
-	TOrF TorF
+	TOrF TOrF
 	MultipleChoice MultipleChoice
 }
 
@@ -43,7 +43,7 @@ type QAndA struct {
 	Answer string
 }
 
-type TorF struct {
+type TOrF struct {
 	Id string
 	Type string
 	Category string

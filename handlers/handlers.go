@@ -23,7 +23,7 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 
 }
 
-func (fh FlashcardHandler) PostFlashCardHandler (w http.ResponseWriter, r *http.Request){
+func (fh FlashcardHandler) PostFlashcardHandler (w http.ResponseWriter, r *http.Request){
 	//vars := mux.Vars(r)
 	//getVar := vars["type"]
 	fcType := struct {
@@ -57,7 +57,7 @@ func (fh FlashcardHandler) PostFlashCardHandler (w http.ResponseWriter, r *http.
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 	case "TorF":
-		fcTorF := entities.TorF{}
+		fcTorF := entities.TOrF{}
 		err = json.NewDecoder(r.Body).Decode(&fcTorF)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)

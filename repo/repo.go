@@ -20,7 +20,119 @@ func NewRepo(f string) Repo{
 	}
 }
 
-func (r Repo) CreateFlashcard(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateMatching(f entities.Flashcards) (*Database, error) {
+	fcSlice := Database{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil{
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &fcSlice)
+	if err != nil{
+		return nil, err
+	}
+
+	fcSlice.Database = append(fcSlice.Database, f)
+
+	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
+	if err != nil{
+		return nil, err
+	}
+
+	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	if err != nil{
+		return nil, err
+	}
+
+	return &fcSlice, nil
+}
+
+func (r Repo) CreateInfoOnly(f entities.Flashcards) (*Database, error) {
+	fcSlice := Database{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil{
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &fcSlice)
+	if err != nil{
+		return nil, err
+	}
+
+	fcSlice.Database = append(fcSlice.Database, f)
+
+	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
+	if err != nil{
+		return nil, err
+	}
+
+	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	if err != nil{
+		return nil, err
+	}
+
+	return &fcSlice, nil
+}
+
+func (r Repo) CreateQAndA(f entities.Flashcards) (*Database, error) {
+	fcSlice := Database{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil{
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &fcSlice)
+	if err != nil{
+		return nil, err
+	}
+
+	fcSlice.Database = append(fcSlice.Database, f)
+
+	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
+	if err != nil{
+		return nil, err
+	}
+
+	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	if err != nil{
+		return nil, err
+	}
+
+	return &fcSlice, nil
+}
+
+func (r Repo) CreateTOrF(f entities.Flashcards) (*Database, error) {
+	fcSlice := Database{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil{
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &fcSlice)
+	if err != nil{
+		return nil, err
+	}
+
+	fcSlice.Database = append(fcSlice.Database, f)
+
+	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
+	if err != nil{
+		return nil, err
+	}
+
+	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	if err != nil{
+		return nil, err
+	}
+
+	return &fcSlice, nil
+}
+
+func (r Repo) CreateMultipleChoice(f entities.Flashcards) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)

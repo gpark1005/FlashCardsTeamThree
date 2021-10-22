@@ -20,7 +20,7 @@ func NewRepo(f string) Repo{
 	}
 }
 
-func (r Repo) CreateMatching(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateMatching(f entities.Matching) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
@@ -48,7 +48,7 @@ func (r Repo) CreateMatching(f entities.Flashcards) (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) CreateInfoOnly(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateInfoOnly(f entities.InfoOnly) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
@@ -76,7 +76,7 @@ func (r Repo) CreateInfoOnly(f entities.Flashcards) (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) CreateQAndA(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateQAndA(f entities.QAndA) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
@@ -104,7 +104,7 @@ func (r Repo) CreateQAndA(f entities.Flashcards) (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) CreateTOrF(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateTOrF(f entities.TOrF) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
@@ -132,7 +132,7 @@ func (r Repo) CreateTOrF(f entities.Flashcards) (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) CreateMultipleChoice(f entities.Flashcards) (*Database, error) {
+func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) (*Database, error) {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)

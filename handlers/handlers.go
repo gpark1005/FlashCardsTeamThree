@@ -9,7 +9,11 @@ import (
 )
 
 type Service interface{
-	CreateFlashcard (f entities.Flashcards) (*repo.Database, error)
+	CreateMatching (f entities.Matching) (*repo.Database, error)
+	CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error)
+	CreateQAndA(f entities.QAndA) (*repo.Database, error)
+	CreateTOrF(f entities.TOrF) (*repo.Database, error)
+	CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error)
 }
 
 type FlashcardHandler struct {
@@ -37,36 +41,39 @@ func (fh FlashcardHandler) PostFlashcardHandler (w http.ResponseWriter, r *http.
 
 	switch fcType.Type {
 	case "Matching":
-		flashcards := entities.Flashcards{}
-		fcMatching := flashcards.Matching
+		fcMatching := entities.Matching{}
 		err = json.NewDecoder(r.Body).Decode(&fcMatching)
 		if err != nil{
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		//fh.Svc.CreateFlashcard(fcMatching)
+		db, err := fh.Svc.CreateMatching(fcMatching)
 	case "InfoOnly":
 		fcInfoOnly := entities.InfoOnly{}
 		err = json.NewDecoder(r.Body).Decode(&fcInfoOnly)
 		if err != nil{
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+		db, err := fh.Svc.CreateInfoOnly(fcInfoOnly)
 	case "QAndA":
 		fcQAndA := entities.QAndA{}
 		err = json.NewDecoder(r.Body).Decode(&fcQAndA)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+		db, err := fh.Svc.CreateQAndA(fcQAndA)
 	case "TorF":
 		fcTorF := entities.TOrF{}
 		err = json.NewDecoder(r.Body).Decode(&fcTorF)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+		db, err := fh.Svc.CreateTOrF(fcTorF)
 	case "MultipleChoice":
 		fcMultipleChoice := entities.MultipleChoice{}
 		err = json.NewDecoder(r.Body).Decode(&fcMultipleChoice)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+		db, err := fh.Svc.CreateMultipleChoice(fcMultipleChoice)
 	}
 }

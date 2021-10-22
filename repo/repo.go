@@ -7,7 +7,7 @@ import (
 )
 
 type Database struct {
-	Database []entities.Flashcards
+	Database []interface{}
 }
 
 type Repo struct {

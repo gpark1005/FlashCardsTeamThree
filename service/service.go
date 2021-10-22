@@ -6,7 +6,11 @@ import (
 )
 
 type Repo interface {
-	CreateFlashcard (f entities.Flashcards) (*repo.Database, error)
+	CreateMatching (f entities.Matching) (*repo.Database, error)
+	CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error)
+	CreateQAndA(f entities.QAndA) (*repo.Database, error)
+	CreateTOrF(f entities.TOrF) (*repo.Database, error)
+	CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error)
 }
 
 type Service struct {
@@ -28,7 +32,7 @@ func (s Service) CreateMatching(f entities.Matching) (*repo.Database, error) {
 }
 
 func (s Service) CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error) {
-	db, err := s.Repo.CreateFlashcard(f)
+	db, err := s.Repo.CreateInfoOnly(f)
 	if err != nil{
 		return nil, err
 	}
@@ -36,7 +40,7 @@ func (s Service) CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error) {
 }
 
 func (s Service) CreateQAndA(f entities.QAndA) (*repo.Database, error){
-	db, err := s.Repo.CreateFlashcard(f)
+	db, err := s.Repo.CreateQAndA(f)
 	if err != nil{
 		return nil, err
 	}
@@ -44,7 +48,7 @@ func (s Service) CreateQAndA(f entities.QAndA) (*repo.Database, error){
 }
 
 func (s Service) CreateTOrF(f entities.TOrF) (*repo.Database, error){
-	db, err := s.Repo.CreateFlashcard(f)
+	db, err := s.Repo.CreateTOrF(f)
 	if err != nil{
 		return nil, err
 	}
@@ -52,7 +56,7 @@ func (s Service) CreateTOrF(f entities.TOrF) (*repo.Database, error){
 }
 
 func (s Service) CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error){
-	db, err := s.Repo.CreateFlashcard(f)
+	db, err := s.Repo.CreateMultipleChoice(f)
 	if err != nil{
 		return nil, err
 	}

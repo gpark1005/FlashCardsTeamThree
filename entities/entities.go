@@ -1,49 +1,49 @@
 package entities
 
 type Flashcards struct {
-	Matching       Matching
-	InfoOnly       InfoOnly
-	QAndA          QAndA
-	TOrF           TOrF
-	MultipleChoice MultipleChoice
+	matching       Matching
+	infoOnly       InfoOnly
+	qAndA          QAndA
+	tOrF           TOrF
+	multipleChoice MultipleChoice
 }
 
 type Matching struct {
-	Id       string
-	Type     string
-	Category string
-	Question map[string]interface{}
-	Choices  map[string]interface{}
-	Answers  map[string]interface{}
+	id       string
+	ctype     string`json:"type"`
+	category string `json:"category"`
+	question map[string]interface{}`json:"question"`
+	choices  map[string]interface{} `json:"choices"`
+	answers  map[string]interface{}`json:"answers"`
 }
 
 type InfoOnly struct {
-	Id          string
-	Type        string
-	Information string
+	id          string
+	ctype        string `json:"type"`
+	information string `json:"information"`
 }
 
 type QAndA struct {
-	Id       string
-	Type     string
-	Category string
-	Question string
-	Answer   string
+	id       string
+	ctype     string `json:"type"`
+	category string `json:"category"`
+	question string`json:"question"`
+	answer   string`json:"answer"`
 }
 
 type TOrF struct {
-	Id       string
-	Type     string
-	Category string
-	Question string
-	Answer   string
+	id       string
+	ctype     string `json:"type"`
+	category string`json:"category"`
+	question string`json:"question"`
+	answer   string`json:"answer"`
 }
 
 type MultipleChoice struct {
-	Id       string
-	Type     string
-	Category string
-	Question string
-	Choices  map[string]interface{}
-	Answer   string
+	id       string
+	ctype     string `json:"type"`
+	category string`json:"category"`
+	question string`json:"question"`
+	choices  map[string]interface{} `json:"choices"`
+	answer   string `json:"answer"`
 }

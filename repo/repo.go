@@ -7,155 +7,155 @@ import (
 )
 
 type Database struct {
-	Database []interface{}
+	Flashcards []interface{}
 }
 
 type Repo struct {
 	Filename string
 }
 
-func NewRepo(f string) Repo{
+func NewRepo(f string) Repo {
 	return Repo{
 		Filename: f,
 	}
 }
 
-func (r Repo) CreateMatching(f entities.Matching) (*Database, error) {
+func (r Repo) CreateMatching(f entities.Matching) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	fcSlice.Database = append(fcSlice.Database, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	return &fcSlice, nil
+	return nil
 }
 
-func (r Repo) CreateInfoOnly(f entities.InfoOnly) (*Database, error) {
+func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	fcSlice.Database = append(fcSlice.Database, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	return &fcSlice, nil
+	return nil
 }
 
-func (r Repo) CreateQAndA(f entities.QAndA) (*Database, error) {
+func (r Repo) CreateQAndA(f entities.QAndA) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	fcSlice.Database = append(fcSlice.Database, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	return &fcSlice, nil
+	return nil
 }
 
-func (r Repo) CreateTOrF(f entities.TOrF) (*Database, error) {
+func (r Repo) CreateTOrF(f entities.TOrF) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	fcSlice.Database = append(fcSlice.Database, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	return &fcSlice, nil
+	return nil
 }
 
-func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) (*Database, error) {
+func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 	fcSlice := Database{}
 
 	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = json.Unmarshal(file, &fcSlice)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	fcSlice.Database = append(fcSlice.Database, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
 	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
-	if err != nil{
-		return nil, err
+	if err != nil {
+		return err
 	}
 
-	return &fcSlice, nil
+	return nil
 }

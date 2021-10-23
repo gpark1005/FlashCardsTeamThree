@@ -1,61 +1,49 @@
 package entities
 
 type Flashcards struct {
-	Matching Matching
-	InfoOnly InfoOnly
-	QAndA QAndA
-	TOrF TOrF
+	Matching       Matching
+	InfoOnly       InfoOnly
+	QAndA          QAndA
+	TOrF           TOrF
 	MultipleChoice MultipleChoice
 }
 
-type Question struct {
-	Questions []string
-}
-
-type Choices struct {
-	Choices map[int]string
-}
-
-type Answers struct {
-	Answers map[string]int
-}
-
 type Matching struct {
-	Id string
-	Type string
+	Id       string
+	Type     string
 	Category string
-	Question Question
-	Choices Choices
-	Answers Answers
+	Question map[string]interface{}
+	Choices  map[string]interface{}
+	Answers  map[string]interface{}
 }
 
 type InfoOnly struct {
-	Id string
-	Type string
+	Id          string
+	Type        string
 	Information string
 }
 
 type QAndA struct {
-	Id string
-	Type string
+	Id       string
+	Type     string
 	Category string
 	Question string
-	Answer string
+	Answer   string
 }
 
 type TOrF struct {
-	Id string
-	Type string
+	Id       string
+	Type     string
 	Category string
 	Question string
-	Answer string
+	Answer   string
 }
 
 type MultipleChoice struct {
-	Id string
-	Type string
+	Id       string
+	Type     string
 	Category string
 	Question string
-	Choices Choices
-	Answer string
+	Choices  map[string]interface{}
+	Answer   string
 }

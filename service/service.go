@@ -2,15 +2,14 @@ package service
 
 import (
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
-	"github.com/gpark1005/FlashCardsTeamThree/repo"
 )
 
 type Repo interface {
-	CreateMatching (f entities.Matching) (*repo.Database, error)
-	CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error)
-	CreateQAndA(f entities.QAndA) (*repo.Database, error)
-	CreateTOrF(f entities.TOrF) (*repo.Database, error)
-	CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error)
+	CreateMatching(f entities.Matching) error
+	CreateInfoOnly(f entities.InfoOnly) error
+	CreateQAndA(f entities.QAndA) error
+	CreateTOrF(f entities.TOrF) error
+	CreateMultipleChoice(f entities.MultipleChoice) error
 }
 
 type Service struct {
@@ -23,42 +22,42 @@ func NewService(r Repo) Service {
 	}
 }
 
-func (s Service) CreateMatching(f entities.Matching) (*repo.Database, error) {
-	db, err := s.Repo.CreateMatching(f)
-	if err != nil{
-		return nil, err
+func (s Service) CreateMatching(f entities.Matching) error {
+	err := s.Repo.CreateMatching(f)
+	if err != nil {
+		return err
 	}
-	return db, nil
+	return nil
 }
 
-func (s Service) CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error) {
-	db, err := s.Repo.CreateInfoOnly(f)
-	if err != nil{
-		return nil, err
+func (s Service) CreateInfoOnly(f entities.InfoOnly) error {
+	err := s.Repo.CreateInfoOnly(f)
+	if err != nil {
+		return err
 	}
-	return db, nil
+	return nil
 }
 
-func (s Service) CreateQAndA(f entities.QAndA) (*repo.Database, error){
-	db, err := s.Repo.CreateQAndA(f)
-	if err != nil{
-		return nil, err
+func (s Service) CreateQAndA(f entities.QAndA) error {
+	err := s.Repo.CreateQAndA(f)
+	if err != nil {
+		return err
 	}
-	return db, nil
+	return nil
 }
 
-func (s Service) CreateTOrF(f entities.TOrF) (*repo.Database, error){
-	db, err := s.Repo.CreateTOrF(f)
-	if err != nil{
-		return nil, err
+func (s Service) CreateTOrF(f entities.TOrF) error {
+	err := s.Repo.CreateTOrF(f)
+	if err != nil {
+		return err
 	}
-	return db, nil
+	return nil
 }
 
-func (s Service) CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error){
-	db, err := s.Repo.CreateMultipleChoice(f)
-	if err != nil{
-		return nil, err
+func (s Service) CreateMultipleChoice(f entities.MultipleChoice) error {
+	err := s.Repo.CreateMultipleChoice(f)
+	if err != nil {
+		return err
 	}
-	return db, nil
+	return nil
 }

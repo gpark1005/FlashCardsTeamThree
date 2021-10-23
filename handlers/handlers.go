@@ -3,17 +3,16 @@ package handlers
 import (
 	"encoding/json"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
-	"github.com/gpark1005/FlashCardsTeamThree/repo"
 	"net/http"
 	//"github.com/gorilla/mux"
 )
 
-type Service interface{
-	CreateMatching (f entities.Matching) (*repo.Database, error)
-	CreateInfoOnly(f entities.InfoOnly) (*repo.Database, error)
-	CreateQAndA(f entities.QAndA) (*repo.Database, error)
-	CreateTOrF(f entities.TOrF) (*repo.Database, error)
-	CreateMultipleChoice(f entities.MultipleChoice) (*repo.Database, error)
+type Service interface {
+	CreateMatching(f entities.Matching) error
+	CreateInfoOnly(f entities.InfoOnly) error
+	CreateQAndA(f entities.QAndA) error
+	CreateTOrF(f entities.TOrF) error
+	CreateMultipleChoice(f entities.MultipleChoice) error
 }
 
 type FlashcardHandler struct {
@@ -27,7 +26,7 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 
 }
 
-func (fh FlashcardHandler) PostFlashcardHandler (w http.ResponseWriter, r *http.Request){
+func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
 	//vars := mux.Vars(r)
 	//getVar := vars["type"]
 	fcType := struct {
@@ -35,7 +34,7 @@ func (fh FlashcardHandler) PostFlashcardHandler (w http.ResponseWriter, r *http.
 	}{}
 
 	err := json.NewDecoder(r.Body).Decode(&fcType)
-	if err != nil{
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
@@ -43,37 +42,55 @@ func (fh FlashcardHandler) PostFlashcardHandler (w http.ResponseWriter, r *http.
 	case "Matching":
 		fcMatching := entities.Matching{}
 		err = json.NewDecoder(r.Body).Decode(&fcMatching)
-		if err != nil{
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		db, err := fh.Svc.CreateMatching(fcMatching)
+		err = fh.Svc.CreateMatching(fcMatching)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 	case "InfoOnly":
 		fcInfoOnly := entities.InfoOnly{}
 		err = json.NewDecoder(r.Body).Decode(&fcInfoOnly)
-		if err != nil{
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		db, err := fh.Svc.CreateInfoOnly(fcInfoOnly)
+		err = fh.Svc.CreateInfoOnly(fcInfoOnly)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 	case "QAndA":
 		fcQAndA := entities.QAndA{}
 		err = json.NewDecoder(r.Body).Decode(&fcQAndA)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		db, err := fh.Svc.CreateQAndA(fcQAndA)
+		err = fh.Svc.CreateQAndA(fcQAndA)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 	case "TorF":
 		fcTorF := entities.TOrF{}
 		err = json.NewDecoder(r.Body).Decode(&fcTorF)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		db, err := fh.Svc.CreateTOrF(fcTorF)
+		err = fh.Svc.CreateTOrF(fcTorF)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 	case "MultipleChoice":
 		fcMultipleChoice := entities.MultipleChoice{}
 		err = json.NewDecoder(r.Body).Decode(&fcMultipleChoice)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-		db, err := fh.Svc.CreateMultipleChoice(fcMultipleChoice)
+		err = fh.Svc.CreateMultipleChoice(fcMultipleChoice)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
 }

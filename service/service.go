@@ -1,11 +1,9 @@
 package service
 
 import (
-	"encoding/json"
-	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"github.com/google/uuid"
+	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"github.com/gpark1005/FlashCardsTeamThree/repo"
-	"io/ioutil"
 )
 
 type Repo interface {

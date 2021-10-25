@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
+	"github.com/gpark1005/FlashCardsTeamThree/repo"
 	"io/ioutil"
 	"net/http"
 	//"github.com/gorilla/mux"
@@ -14,6 +15,7 @@ type Service interface {
 	CreateQAndA(f entities.QAndA) error
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
+	GetAllFlashcards() (*repo.Database, error)
 }
 
 type FlashcardHandler struct {
@@ -42,6 +44,7 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 	err = json.Unmarshal(data, &fcType)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	switch fcType.Type {
@@ -50,53 +53,81 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 		err = json.Unmarshal(data, &fcMatching)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		err = fh.Svc.CreateMatching(fcMatching)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 	case "InfoOnly":
 		fcInfoOnly := entities.InfoOnly{}
 		err = json.Unmarshal(data, &fcInfoOnly)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		err = fh.Svc.CreateInfoOnly(fcInfoOnly)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 	case "QAndA":
 		fcQAndA := entities.QAndA{}
 		err = json.Unmarshal(data, &fcQAndA)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		err = fh.Svc.CreateQAndA(fcQAndA)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 	case "TOrF":
 		fcTorF := entities.TOrF{}
 		err = json.Unmarshal(data, &fcTorF)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		err = fh.Svc.CreateTOrF(fcTorF)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 	case "MultipleChoice":
 		fcMultipleChoice := entities.MultipleChoice{}
 		err = json.Unmarshal(data, &fcMultipleChoice)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		err = fh.Svc.CreateMultipleChoice(fcMultipleChoice)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (fh FlashcardHandler) GetAllFlashcards(w http.ResponseWriter, r *http.Request){
+	db, err := fh.Svc.GetAllFlashcards()
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	fcData, err := json.MarshalIndent(db, "", "	")
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	_,err = w.Write(fcData)
 }

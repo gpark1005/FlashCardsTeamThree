@@ -10,6 +10,10 @@ type Database struct {
 	Flashcards []interface{}
 }
 
+type Data struct {
+	Data interface{}
+}
+
 type Repo struct {
 	Filename string
 }
@@ -174,3 +178,16 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	}
 	return &fcSlice, nil
 }
+
+//func (r Repo) GetByType(ct string) (*Database, error){
+//	var db, foundTypes Database
+//	file, err := ioutil.ReadFile(r.Filename)
+//	if err != nil{
+//		return nil, err
+//	}
+//
+//	err = json.Unmarshal(file, &db)
+//	if err != nil{
+//		return nil, err
+//	}
+//}

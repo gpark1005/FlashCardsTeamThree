@@ -1,7 +1,7 @@
 package entities
 
 type Flashcards struct {
-	matching       Matching
+	matching       []Matching
 	infoOnly       InfoOnly
 	qAndA          QAndA
 	tOrF           TOrF

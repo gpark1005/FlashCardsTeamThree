@@ -7,8 +7,13 @@ import (
 )
 
 type Database struct {
-	Flashcards []interface{}
+	Matching       []entities.Matching
+	InfoOnly       []entities.InfoOnly
+	QAndA          []entities.QAndA
+	TOrF           []entities.TOrF
+	MultipleChoice []entities.MultipleChoice
 }
+
 
 type Data struct {
 	Data interface{}
@@ -37,7 +42,7 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.Matching = append(fcSlice.Matching, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -65,7 +70,7 @@ func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.InfoOnly = append(fcSlice.InfoOnly, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -93,7 +98,7 @@ func (r Repo) CreateQAndA(f entities.QAndA) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.QAndA = append(fcSlice.QAndA, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -121,7 +126,7 @@ func (r Repo) CreateTOrF(f entities.TOrF) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.TOrF = append(fcSlice.TOrF, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -149,7 +154,7 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.MultipleChoice = append(fcSlice.MultipleChoice, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -180,7 +185,9 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 }
 
 //func (r Repo) GetByType(ct string) (*Database, error){
-//	var db, foundTypes Database
+//	db := Database{}
+//	var foundTypes []interface{}
+//
 //	file, err := ioutil.ReadFile(r.Filename)
 //	if err != nil{
 //		return nil, err
@@ -190,4 +197,8 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 //	if err != nil{
 //		return nil, err
 //	}
+//	for _, v := range db.Flashcards{
+//		foundTypes = append(foundTypes, v)
+//	}
+//
 //}

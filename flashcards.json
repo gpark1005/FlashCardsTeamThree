@@ -1,27 +1,59 @@
 {
 	"Flashcards": [
 		{
-			"Id": "",
-			"type": "Matching",
-			"category": "Goland",
-			"question": {
-				"First question": "Some question",
-				"Fourth question": "Some final question",
-				"Second question": "Some other question",
-				"Third question": "Some other other question"
+			"Id": "f0e9f23f-6392-4b9b-9cda-45ffb3cfc9cf",
+			"answers": {
+				"First answer": "Answer 1",
+				"Fourth answer": "Answer 4",
+				"Second answer": "Answer 2",
+				"Third answer": "Answer 3"
 			},
+			"category": "Goland",
 			"choices": {
 				"First choice": "Some choice",
 				"Fourth choice": "Some final choice",
 				"Second choice": "Some other choice",
 				"Third choice": "Some other other choice"
 			},
-			"answers": {
-				"First answer": "Answer 1",
-				"Fourth answer": "Answer 4",
-				"Second answer": "Answer 2",
-				"Third answer": "Answer 3"
-			}
+			"question": {
+				"First question": "Some initial question",
+				"Fourth question": "Some final question",
+				"Second question": "Some other question",
+				"Third question": "Some other other question"
+			},
+			"type": "Matching"
+		},
+		{
+			"Id": "2bd442fe-0b16-4417-b291-f1b87471f38d",
+			"information": "information about code",
+			"type": "InfoOnly"
+		},
+		{
+			"Id": "44e02544-0ea0-4678-a538-05320d4639dd",
+			"answer": "Answer to question.",
+			"category": "some category",
+			"question": "First question here?",
+			"type": "QAndA"
+		},
+		{
+			"Id": "8a79b151-4ae3-4020-bea8-c8372bd931be",
+			"answer": "true",
+			"category": "some category",
+			"question": "First question here?",
+			"type": "TOrF"
+		},
+		{
+			"Id": "7258a11a-3681-40c0-98af-7499f45cdc0b",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {
+				"1": "Answer to question.",
+				"2": "Answer to question.",
+				"3": "Answer to question.",
+				"4": "Answer to question."
+			},
+			"answer": "1"
 		}
 	]
 }

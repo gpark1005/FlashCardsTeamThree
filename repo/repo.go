@@ -159,3 +159,18 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 
 	return nil
 }
+
+
+func (r Repo) GetAllFlashcards() (*Database, error) {
+	fcSlice := Database{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(file, &fcSlice)
+	if err != nil {
+		return nil, err
+	}
+	return &fcSlice, nil
+}

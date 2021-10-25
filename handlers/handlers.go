@@ -75,7 +75,7 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-	case "TorF":
+	case "TOrF":
 		fcTorF := entities.TOrF{}
 		err = json.Unmarshal(data, &fcTorF)
 		if err != nil {

@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"github.com/gpark1005/FlashCardsTeamThree/repo"
@@ -18,7 +17,7 @@ type Service interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	GetById()
+	GetById(id string) (interface{}, error)
 }
 
 type FlashcardHandler struct {
@@ -138,6 +137,19 @@ func (fh FlashcardHandler) GetAllFlashcards(w http.ResponseWriter, r *http.Reque
 func (fh FlashcardHandler) GetById (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars ["Id"]
-	fmt.Println(id)
-	fh.Svc.GetById()
+
+	fc, err := fh.Svc.GetById(id)
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	fcData, err := json.MarshalIndent(fc, "", "	")
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted)
+	_,err = w.Write(fcData)
 }

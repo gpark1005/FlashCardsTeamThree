@@ -2,10 +2,8 @@ package repo
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"io/ioutil"
-	"reflect"
 )
 
 type Database struct {
@@ -15,7 +13,6 @@ type Database struct {
 	TOrF           []entities.TOrF
 	MultipleChoice []entities.MultipleChoice
 }
-
 
 type Data struct {
 	Data interface{}
@@ -186,34 +183,38 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) GetById(id string) (interface{}, error) {
-	db := map[string]interface{}{}
+//func (r Repo) GetById(id string) (interface{}, error) {
+//	var db []map[string]interface{}
+//
+//	file, err := ioutil.ReadFile(r.Filename)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	err = json.Unmarshal(file, &db)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	for _, v := range db {
+//		if idCheck, ok := db["Id"]; ok {
+//			switch idCheck {
+//			case idCheck == id:
+//			}
+//		}
+//	}
+//	return nil, err
+//}
 
-	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil {
-		fmt.Println(err)
-	}
 
-	err = json.Unmarshal(file, &db)
-	if err != nil {
-		fmt.Println(err)
-	}
 
-	//idFound := entities.Flashcards{}
 
-	for _, v := range db {
-		if idCheck, ok := db["id"]; ok {
-			switch idCheck {
-			case idCheck == id:
-				result := reflect.ValueOf(v)
-				return result, err
-				
-			}
-		}
-		fmt.Println(v)
-	}
-	return nil, err
-}
+
+
+
+
+
+
 //	switch  {
 //	case db.Matching:
 //		if db.Matching == typ

@@ -13,7 +13,7 @@ type Repo interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	GetById()
+	GetById(id string) (interface{}, error)
 }
 
 type Service struct {
@@ -85,6 +85,10 @@ func (s Service) GetAllFlashcards() (*repo.Database, error) {
 	return fcSlice, nil
 }
 
-func (s Service) GetById() {
-	s.Repo.GetById()
+func (s Service) GetById(id string) (interface{}, error) {
+	fc, err := s.Repo.GetById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
 }

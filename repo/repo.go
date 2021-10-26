@@ -2,8 +2,10 @@ package repo
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"io/ioutil"
+	"reflect"
 )
 
 type Database struct {
@@ -184,21 +186,45 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	return &fcSlice, nil
 }
 
-//func (r Repo) GetByType(ct string) (*Database, error){
-//	db := Database{}
-//	var foundTypes []interface{}
-//
-//	file, err := ioutil.ReadFile(r.Filename)
-//	if err != nil{
-//		return nil, err
+func (r Repo) GetById(id string) (interface{}, error) {
+	db := map[string]interface{}{}
+
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	//idFound := entities.Flashcards{}
+
+	for _, v := range db {
+		if idCheck, ok := db["id"]; ok {
+			switch idCheck {
+			case idCheck == id:
+				result := reflect.ValueOf(v)
+				return result, err
+				
+			}
+		}
+		fmt.Println(v)
+	}
+	return nil, err
+}
+//	switch  {
+//	case db.Matching:
+//		if db.Matching == typ
 //	}
-//
-//	err = json.Unmarshal(file, &db)
-//	if err != nil{
-//		return nil, err
+//}
+//		_, v := range db.Matching{
+//		if v == id {
+//			idFound = v
+//			return nil, err
+//		}
 //	}
-//	for _, v := range db.Flashcards{
-//		foundTypes = append(foundTypes, v)
-//	}
+//	return nil, err
 //
 //}

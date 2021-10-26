@@ -41,6 +41,10 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 		return err
 	}
 
+	for _, v := range fcSlice.Matching {
+		if v
+	}
+
 	fcSlice.Matching = append(fcSlice.Matching, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
@@ -152,6 +156,8 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 	if err != nil {
 		return err
 	}
+
+
 
 	fcSlice.MultipleChoice = append(fcSlice.MultipleChoice, f)
 

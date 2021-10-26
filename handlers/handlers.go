@@ -30,26 +30,29 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 	}
 }
 
+type FcType struct {
+	Type string `json:"Type"`
+}
+
 //var FcType map[string]interface{}
 
 func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
-	fcType := struct {
-		Type string `json:"Type"`
-	}{}
-
+	cType := FcType{}
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	err = json.Unmarshal(data, &fcType)
+	err = json.Unmarshal(data, &cType)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	switch fcType.Type {
+
+
+	switch cType.Type {
 	case "Matching":
 		fcMatching := entities.Matching{}
 		err = json.Unmarshal(data, &fcMatching)

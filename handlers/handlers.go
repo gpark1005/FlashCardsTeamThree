@@ -70,6 +70,20 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
+			err = ValidateMatching(fcMatching)
+			if err != nil {
+				switch err.Error(){
+				case "no answers provided":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "no choices provided":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "no questions provided":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+			}
 			err = fh.Svc.CreateMatching(fcMatching)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)

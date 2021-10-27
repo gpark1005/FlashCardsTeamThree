@@ -85,6 +85,19 @@
 				"4": "Answer to question."
 			},
 			"answer": "1"
+		},
+		{
+			"Id": "53510854-f1f1-4c8f-9a23-ab8751b29da3",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {
+				"1": "Answer to question.",
+				"2": "Answer to question.",
+				"3": "Answer to question.",
+				"4": "Answer to question."
+			},
+			"answer": "1"
 		}
 	]
 }

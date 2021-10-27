@@ -7,7 +7,7 @@ func ConfigureRouter(fh FlashcardHandler) *mux.Router {
 
 	r.HandleFunc("/flashcard", fh.PostFlashcardHandler).Methods("POST")
 	r.HandleFunc("/flashcard", fh.GetAllFlashcards).Methods("GET")
-	r.HandleFunc("/flashcard/{Id}", fh.GetById).Methods("GET")
+	//r.HandleFunc("/flashcard/{Id}", fh.GetById).Methods("GET")
 
 	return r
 }

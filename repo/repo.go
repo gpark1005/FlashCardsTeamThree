@@ -41,9 +41,9 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 		return err
 	}
 
-	for _, v := range fcSlice.Matching {
-		if v
-	}
+	//for _, v := range fcSlice.Matching {
+	//	if v
+	//}
 
 	fcSlice.Matching = append(fcSlice.Matching, f)
 

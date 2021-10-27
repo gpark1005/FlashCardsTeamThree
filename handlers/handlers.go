@@ -96,6 +96,17 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
+			err = ValidateInfoOnly(fcInfoOnly)
+			if err != nil {
+				switch err.Error(){
+				case "no category provided":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "no information provided":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+			}
 			err = fh.Svc.CreateInfoOnly(fcInfoOnly)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)

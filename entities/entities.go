@@ -20,6 +20,7 @@ type Matching struct {
 type InfoOnly struct {
 	Id          string
 	Ctype       string `json:"type"`
+	Category 	string `json:"category"`
 	Information string `json:"information"`
 }
 

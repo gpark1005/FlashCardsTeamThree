@@ -42,9 +42,14 @@ func ValidateMatching(m entities.Matching) error {
 }
 
 
-//func ValidateInfoOnly(i entities.InfoOnly) (bool, error) {
-//
-//}
+func ValidateInfoOnly(i entities.InfoOnly) error {
+	if i.Category == ""{
+		return errors.New("no category provided")
+	}else if i.Information == "" {
+		return errors.New("no information provided")
+	}
+	return nil
+}
 //
 //
 //func ValidateQAndA(q entities.QAndA) (bool, error) {

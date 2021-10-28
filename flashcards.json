@@ -117,6 +117,48 @@
 				"4": "Answer to question."
 			},
 			"answer": "1"
+		},
+		{
+			"Id": "8281e940-f1a1-4742-8816-6e584c36e8db",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {
+				"1": "",
+				"2": "Answer to question.",
+				"3": "Answer to question.",
+				"4": "Answer to question."
+			},
+			"answer": "1"
+		},
+		{
+			"Id": "b662be12-9020-46ca-b2f3-1d235a7cbfb2",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {
+				"1": "",
+				"2": "",
+				"3": "",
+				"4": ""
+			},
+			"answer": "1"
+		},
+		{
+			"Id": "76242072-385e-4b1f-b2dd-b9846467fff8",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {},
+			"answer": "1"
+		},
+		{
+			"Id": "4cb29b76-5094-4b3d-b61d-3cd0e1fa81b5",
+			"type": "MultipleChoice",
+			"category": "some category",
+			"question": "First question here?",
+			"choices": {},
+			"answer": "1"
 		}
 	]
 }

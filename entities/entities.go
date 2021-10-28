@@ -88,7 +88,7 @@ func (m Matching) ValidateMatching() error {
 	}else if m.Choices == nil{
 		return errors.New("choices required")
 	}else if m.Question == nil{
-		return errors.New("question required")
+		return errors.New("questions required")
 	}
 	return nil
 }
@@ -107,7 +107,7 @@ func (q QAndA) ValidateQAndA() error {
 	if q.Category == ""{
 		return errors.New("category required")
 	}else if q.Question == "" {
-		return errors.New("questions required")
+		return errors.New("question(s) required")
 	}else if q.Answer == "" {
 		return errors.New("answer required")
 	}
@@ -118,7 +118,7 @@ func (t TOrF) ValidateTOrF() error {
 	if t.Category == ""{
 		return errors.New("category required")
 	}else if t.Question == "" {
-		return errors.New("questions required")
+		return errors.New("question(s) required")
 	}else if t.Answer == "" {
 		return errors.New("answer required")
 	}
@@ -129,7 +129,7 @@ func (mc MultipleChoice) ValidateMultipleChoice() error {
 	if mc.Category == ""{
 		return errors.New("category required")
 	}else if mc.Question == "" {
-		return errors.New("questions required")
+		return errors.New("question(s) required")
 	}else if mc.Answer == "" {
 		return errors.New("answer required")
 	}else if mc.Choices == nil {

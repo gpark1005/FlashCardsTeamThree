@@ -71,13 +71,16 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 			err = fcMatching.ValidateMatching()
 			if err != nil {
 				switch err.Error(){
-				case "no answers provided":
+				case "category required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
-				case "no choices provided":
+				case "answer key required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
-				case "no questions provided":
+				case "choices required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "questions required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
 				}
@@ -117,6 +120,20 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
+			err = fcQAndA.ValidateQAndA()
+			if err != nil{
+				switch err.Error() {
+				case "category required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "question(s) required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "answer required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+			}
 			err = fh.Svc.CreateQAndA(fcQAndA)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -129,6 +146,20 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
+			err = fcTorF.ValidateTOrF()
+			if err != nil{
+				switch err.Error() {
+				case "category required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "question(s) required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "answer required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				}
+			}
 			err = fh.Svc.CreateTOrF(fcTorF)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
@@ -140,6 +171,24 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
+			}
+			err = fcMultipleChoice.ValidateMultipleChoice()
+			if err != nil{
+				switch err.Error() {
+				case "category required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "question(s) required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "answer required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+				case "choices required":
+					http.Error(w, err.Error(), http.StatusBadRequest)
+					return
+
+				}
 			}
 			err = fh.Svc.CreateMultipleChoice(fcMultipleChoice)
 			if err != nil {

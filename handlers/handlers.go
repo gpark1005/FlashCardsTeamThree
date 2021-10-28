@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"github.com/gpark1005/FlashCardsTeamThree/repo"
 	"io/ioutil"
@@ -16,12 +17,8 @@ type Service interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	//GetById(id string) (interface{}, error)
+	GetById(id string) (map[string]interface{}, error)
 }
-
-//type Validate interface{
-//	ValidateType(t FcType) (bool, error)
-//}
 
 type FlashcardHandler struct {
 	Svc Service
@@ -32,9 +29,6 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 		s,
 	}
 }
-
-
-
 //var FcType map[string]interface{}
 
 func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +53,6 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 		}
 	}
 	if valType == true {
-
 		switch cType.Type {
 		case "Matching":
 			fcMatching := entities.Matching{}
@@ -187,7 +180,6 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				case "choices required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
-
 				}
 			}
 			err = fh.Svc.CreateMultipleChoice(fcMultipleChoice)
@@ -196,7 +188,6 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				return
 			}
 		}
-
 	} else {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -224,22 +215,28 @@ func (fh FlashcardHandler) GetAllFlashcards(w http.ResponseWriter, r *http.Reque
 	_,err = w.Write(fcData)
 }
 
-//func (fh FlashcardHandler) GetById (w http.ResponseWriter, r *http.Request) {
-//	vars := mux.Vars(r)
-//	id := vars ["Id"]
-//
-//	fc, err := fh.Svc.GetById(id)
-//
-//	if err != nil{
-//		http.Error(w, err.Error(), http.StatusBadRequest)
-//	}
-//
-//	fcData, err := json.MarshalIndent(fc, "", "	")
-//	if err != nil{
-//		http.Error(w, err.Error(), http.StatusBadRequest)
-//	}
-//
-//	w.Header().Set("Content-Type", "application/json")
-//	w.WriteHeader(http.StatusAccepted)
-//	_,err = w.Write(fcData)
-//}
+func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars ["Id"]
+
+	fc, err := fh.Svc.GetById(id)
+	if err != nil{
+		switch err.Error() {
+		case "flashcard does not exist":
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+	}
+
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	fcData, err := json.MarshalIndent(fc, "", "	")
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted)
+	_,err = w.Write(fcData)
+}

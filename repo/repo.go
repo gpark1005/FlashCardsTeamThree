@@ -2,20 +2,22 @@ package repo
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
+	//"github.com/gpark1005/FlashCardsTeamThree/infoOnlyRepo"
+	//"github.com/gpark1005/FlashCardsTeamThree/matchingRepo"
+	//"github.com/gpark1005/FlashCardsTeamThree/multiplechoiceRepo"
+	//"github.com/gpark1005/FlashCardsTeamThree/qandaRepo"
+	//"github.com/gpark1005/FlashCardsTeamThree/torfRepo"
 	"io/ioutil"
 )
 
 type Database struct {
-	Matching       []entities.Matching
-	InfoOnly       []entities.InfoOnly
-	QAndA          []entities.QAndA
-	TOrF           []entities.TOrF
-	MultipleChoice []entities.MultipleChoice
+	Flashcards []interface{}
 }
 
-type Data struct {
-	Data interface{}
+type flashcards struct {
+	Flashcards []map[string]interface{}
 }
 
 type Repo struct {
@@ -41,11 +43,7 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 		return err
 	}
 
-	//for _, v := range fcSlice.Matching {
-	//	if v
-	//}
-
-	fcSlice.Matching = append(fcSlice.Matching, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -73,7 +71,7 @@ func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
 		return err
 	}
 
-	fcSlice.InfoOnly = append(fcSlice.InfoOnly, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -101,7 +99,7 @@ func (r Repo) CreateQAndA(f entities.QAndA) error {
 		return err
 	}
 
-	fcSlice.QAndA = append(fcSlice.QAndA, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -129,7 +127,7 @@ func (r Repo) CreateTOrF(f entities.TOrF) error {
 		return err
 	}
 
-	fcSlice.TOrF = append(fcSlice.TOrF, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -157,9 +155,7 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 		return err
 	}
 
-
-
-	fcSlice.MultipleChoice = append(fcSlice.MultipleChoice, f)
+	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
@@ -189,49 +185,25 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	return &fcSlice, nil
 }
 
-//func (r Repo) GetById(id string) (interface{}, error) {
-//	var db []map[string]interface{}
-//
-//	file, err := ioutil.ReadFile(r.Filename)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	err = json.Unmarshal(file, &db)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	for _, v := range db {
-//		if idCheck, ok := db["Id"]; ok {
-//			switch idCheck {
-//			case idCheck == id:
-//			}
-//		}
-//	}
-//	return nil, err
-//}
+func (r Repo) GetById(id string) (map[string]interface{}, error) {
+	db := flashcards{}
 
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil {
+		return nil, err
+	}
 
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
 
-
-
-
-
-
-
-
-//	switch  {
-//	case db.Matching:
-//		if db.Matching == typ
-//	}
-//}
-//		_, v := range db.Matching{
-//		if v == id {
-//			idFound = v
-//			return nil, err
-//		}
-//	}
-//	return nil, err
-//
-//}
+	for _, v := range db.Flashcards{
+		if idCheck, ok := v["Id"]; ok{
+			if idCheck == id{
+				return v, nil
+			}
+		}
+	}
+	return nil, errors.New("flashcard does not exist")
+}

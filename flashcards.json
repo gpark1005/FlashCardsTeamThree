@@ -51,7 +51,26 @@
 		{
 			"Id": "cf609cce-dffb-43cb-85a3-df40d7895648",
 			"type": "InfoOnly",
+			"category": "",
 			"information": "information about code"
+		},
+		{
+			"Id": "e054cab1-e3cb-49d2-bd9c-9fade19c1d9a",
+			"type": "InfoOnly",
+			"category": "Goland",
+			"information": "some info"
+		},
+		{
+			"Id": "36db569a-f46f-40d1-be7c-c32bfd77a997",
+			"type": "InfoOnly",
+			"category": "Goland",
+			"information": ""
+		},
+		{
+			"Id": "896dae36-85a5-42f3-8445-fe6c21dea10c",
+			"type": "InfoOnly",
+			"category": "Goland",
+			"information": "info"
 		}
 	],
 	"QAndA": [

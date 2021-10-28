@@ -33,14 +33,12 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 	}
 }
 
-type FcType struct {
-	Type string `json:"Type"`
-}
+
 
 //var FcType map[string]interface{}
 
 func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
-	cType := FcType{}
+	cType := entities.FcType{}
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -53,7 +51,7 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	valType, err := ValidateType(cType)
+	valType, err := entities.ValidateType(cType)
 	if err != nil {
 		switch err.Error(){
 		case "type not valid":
@@ -70,7 +68,7 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
-			err = ValidateMatching(fcMatching)
+			err = fcMatching.ValidateMatching()
 			if err != nil {
 				switch err.Error(){
 				case "no answers provided":
@@ -96,13 +94,13 @@ func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.R
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
-			err = ValidateInfoOnly(fcInfoOnly)
+			err = fcInfoOnly.ValidateInfoOnly()
 			if err != nil {
 				switch err.Error(){
-				case "no category provided":
+				case "category required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
-				case "no information provided":
+				case "information required":
 					http.Error(w, err.Error(), http.StatusBadRequest)
 					return
 				}

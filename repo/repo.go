@@ -208,3 +208,28 @@ func (r Repo) GetById(id string) (map[string]interface{}, error) {
 	return nil, errors.New("flashcard does not exist")
 }
 
+func (r Repo) UpdateById(id string, m entities.Matching) error {
+	file, err := ioutil.ReadFile(r.Filename)
+	if err != nil{
+		return err
+	}
+
+	md := entities.MatchingDatabase{}
+	err= json.Unmarshal(file, &md)
+
+	for i, v := range md.Matching{
+		if v.Id == id{
+			m.Id = id
+			md.Matching[i] = m
+		}
+	}
+	marshal, err := json.MarshalIndent(md, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.Filename, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}

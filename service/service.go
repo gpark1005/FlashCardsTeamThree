@@ -14,6 +14,7 @@ type Repo interface {
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
 	GetById(id string) (map[string]interface{}, error)
+	UpdateById(id string, m entities.Matching) error
 }
 
 type Service struct {
@@ -95,7 +96,7 @@ func (s Service) GetById(id string) (map[string]interface{}, error) {
 
 func (s Service) UpdateByID(id string, m entities.Matching) error{
 
-	err := m.UpdateById(id, m)
+	err := s.Repo.UpdateById(id, m)
 	if err != nil{
 		return err
 	}

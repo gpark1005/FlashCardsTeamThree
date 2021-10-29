@@ -92,3 +92,12 @@ func (s Service) GetById(id string) (map[string]interface{}, error) {
 	}
 	return fc, nil
 }
+
+func (s Service) UpdateByID(id string, m entities.Matching) error{
+
+	err := m.UpdateById(id, m)
+	if err != nil{
+		return err
+	}
+	return nil
+}

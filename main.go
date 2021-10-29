@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fn := "flashcards.json"
+	fn := "matching.json"
 
 	ext := filepath.Ext(fn)
 	if ext != ".json" {

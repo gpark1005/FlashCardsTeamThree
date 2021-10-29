@@ -18,6 +18,7 @@ type Service interface {
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
 	GetById(id string) (map[string]interface{}, error)
+	UpdateByID(id string, m entities.Matching) error
 }
 
 type FlashcardHandler struct {
@@ -239,4 +240,27 @@ func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted)
 	_,err = w.Write(fcData)
+}
+
+func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
+	fhId := mux.Vars(r)
+	id := fhId["Id"]
+	m := entities.Matching{}
+
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusNoContent)
+		return
+	}
+	err = json.Unmarshal(data, &m)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusNoContent)
+		return
+	}
+	err = fh.Svc.UpdateByID(id, m)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusNoContent)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 }

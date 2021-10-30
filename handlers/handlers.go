@@ -18,7 +18,11 @@ type Service interface {
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
 	GetById(id string) (map[string]interface{}, error)
-	UpdateByID(id string, m entities.Matching) error
+	UpdateMatchingById(id string, m entities.Matching) error
+	UpdateInfoById(id string, io entities.InfoOnly) error
+	UpdateQandAById(id string, qa entities.QAndA) error
+	UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error
+	UpdateTorFById(id string, tf entities.TOrF) error
 }
 
 type FlashcardHandler struct {
@@ -245,22 +249,61 @@ func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
 	fhId := mux.Vars(r)
 	id := fhId["Id"]
-	m := entities.Matching{}
+	cType := entities.FcType{}
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil{
 		http.Error(w, err.Error(), http.StatusNoContent)
 		return
 	}
-	err = json.Unmarshal(data, &m)
+	err = json.Unmarshal(data, &cType)
 	if err != nil{
 		http.Error(w, err.Error(), http.StatusNoContent)
 		return
 	}
-	err = fh.Svc.UpdateByID(id, m)
-	if err != nil{
-		http.Error(w, err.Error(), http.StatusNoContent)
+	switch cType.Type {
+	case "Matching":
+		fcMatching := entities.Matching{}
+		err = json.Unmarshal(data, &fcMatching)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		err = fh.Svc.UpdateMatchingById(id, fcMatching)
+	case "InfoOnly":
+		fcInfoOnly := entities.InfoOnly{}
+		err = json.Unmarshal(data, &fcInfoOnly)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		err = fh.Svc.UpdateInfoById(id, fcInfoOnly)
+	case "QAndA":
+		fcQAndA := entities.QAndA{}
+		err = json.Unmarshal(data, &fcQAndA)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		err = fh.Svc.UpdateQandAById(id, fcQAndA)
+	case "TOrF":
+		fcTorF := entities.TOrF{}
+		err = json.Unmarshal(data, &fcTorF)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		err = fh.Svc.UpdateTorFById(id, fcTorF)
+	case "MultipleChoice":
+		fcMultipleChoice := entities.MultipleChoice{}
+		err = json.Unmarshal(data, &fcMultipleChoice)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		err = fh.Svc.UpdateMultipleChoiceById(id, fcMultipleChoice)
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }

@@ -16,6 +16,7 @@ type Matching struct {
 	Choices  map[string]interface{} `json:"choices"`
 	Answers  map[string]interface{} `json:"answers"`
 }
+
 func (m Matching) ValidateMatching() error {
 	if m.Category == ""{
 		return errors.New("category required")

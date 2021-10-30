@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
+	"reflect"
+
 	//"github.com/gpark1005/FlashCardsTeamThree/infoOnlyRepo"
 	//"github.com/gpark1005/FlashCardsTeamThree/matchingRepo"
 	//"github.com/gpark1005/FlashCardsTeamThree/multiplechoiceRepo"
@@ -21,19 +23,27 @@ type flashcards struct {
 }
 
 type Repo struct {
-	Filename string
+	MatchingFile string
+	InfoOnlyFile string
+	QAndAFile string
+	MultipleChoiceFile string
+	TrueOrFalseFile string
 }
 
-func NewRepo(f string) Repo {
+func NewRepo(m string, io string, mc string, tf string, qa string) Repo {
 	return Repo{
-		Filename: f,
+		MatchingFile: m,
+		InfoOnlyFile: io,
+		QAndAFile: qa,
+		MultipleChoiceFile: mc,
+		TrueOrFalseFile: tf,
 	}
 }
 
 func (r Repo) CreateMatching(f entities.Matching) error {
-	fcSlice := Database{}
+	fcSlice := entities.MatchingDatabase{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile(r.MatchingFile)
 	if err != nil {
 		return err
 	}
@@ -43,14 +53,14 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.Matching = append(fcSlice.Matching, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	err = ioutil.WriteFile(r.MatchingFile, fcBytes, 0644)
 	if err != nil {
 		return err
 	}
@@ -59,9 +69,9 @@ func (r Repo) CreateMatching(f entities.Matching) error {
 }
 
 func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
-	fcSlice := Database{}
+	fcSlice := entities.InfoOnlyDatabase{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile(r.InfoOnlyFile)
 	if err != nil {
 		return err
 	}
@@ -71,14 +81,14 @@ func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.InfoOnly = append(fcSlice.InfoOnly, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	err = ioutil.WriteFile(r.InfoOnlyFile, fcBytes, 0644)
 	if err != nil {
 		return err
 	}
@@ -87,9 +97,9 @@ func (r Repo) CreateInfoOnly(f entities.InfoOnly) error {
 }
 
 func (r Repo) CreateQAndA(f entities.QAndA) error {
-	fcSlice := Database{}
+	fcSlice := entities.QAndADatabase{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile(r.QAndAFile)
 	if err != nil {
 		return err
 	}
@@ -99,14 +109,14 @@ func (r Repo) CreateQAndA(f entities.QAndA) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.QAndA = append(fcSlice.QAndA, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	err = ioutil.WriteFile(r.QAndAFile, fcBytes, 0644)
 	if err != nil {
 		return err
 	}
@@ -115,9 +125,9 @@ func (r Repo) CreateQAndA(f entities.QAndA) error {
 }
 
 func (r Repo) CreateTOrF(f entities.TOrF) error {
-	fcSlice := Database{}
+	fcSlice := entities.TOrFDatabase{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile(r.TrueOrFalseFile)
 	if err != nil {
 		return err
 	}
@@ -127,14 +137,14 @@ func (r Repo) CreateTOrF(f entities.TOrF) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.TOrF = append(fcSlice.TOrF, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	err = ioutil.WriteFile(r.TrueOrFalseFile, fcBytes, 0644)
 	if err != nil {
 		return err
 	}
@@ -143,9 +153,9 @@ func (r Repo) CreateTOrF(f entities.TOrF) error {
 }
 
 func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
-	fcSlice := Database{}
+	fcSlice := entities.MCDatabase{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile(r.MultipleChoiceFile)
 	if err != nil {
 		return err
 	}
@@ -155,14 +165,14 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 		return err
 	}
 
-	fcSlice.Flashcards = append(fcSlice.Flashcards, f)
+	fcSlice.MultipleChoice = append(fcSlice.MultipleChoice, f)
 
 	fcBytes, err := json.MarshalIndent(fcSlice, "", "	")
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(r.Filename, fcBytes, 0644)
+	err = ioutil.WriteFile(r.MultipleChoiceFile, fcBytes, 0644)
 	if err != nil {
 		return err
 	}
@@ -173,14 +183,17 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 
 func (r Repo) GetAllFlashcards() (*Database, error) {
 	fcSlice := Database{}
+	files := []string{r.MatchingFile, r.MultipleChoiceFile, r.TrueOrFalseFile, r.QAndAFile, r.InfoOnlyFile}
 
-	file, err := ioutil.ReadFile(r.Filename)
-	if err != nil {
-		return nil, err
-	}
-	err = json.Unmarshal(file, &fcSlice)
-	if err != nil {
-		return nil, err
+	for _, v := range files {
+		file, err := ioutil.ReadFile(v)
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(file, &fcSlice)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &fcSlice, nil
 }
@@ -208,8 +221,8 @@ func (r Repo) GetById(id string) (map[string]interface{}, error) {
 	return nil, errors.New("flashcard does not exist")
 }
 
-func (r Repo) UpdateById(id string, m entities.Matching) error {
-	file, err := ioutil.ReadFile(r.Filename)
+func (r Repo) UpdateMatchingById(id string, m entities.Matching) error {
+	file, err := ioutil.ReadFile(r.MatchingFile)
 	if err != nil{
 		return err
 	}
@@ -227,7 +240,111 @@ func (r Repo) UpdateById(id string, m entities.Matching) error {
 	if err != nil{
 		return err
 	}
-	err = ioutil.WriteFile(r.Filename, marshal, 0644)
+	err = ioutil.WriteFile(r.MatchingFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) UpdateInfoById(id string, io entities.InfoOnly) error{
+	file, err := ioutil.ReadFile(r.InfoOnlyFile)
+	if err != nil{
+		return err
+	}
+
+	md := entities.InfoOnlyDatabase{}
+	err= json.Unmarshal(file, &md)
+
+	for i, v := range md.InfoOnly{
+		if v.Id == id{
+			io.Id = id
+			md.InfoOnly[i] = io
+		}
+	}
+	marshal, err := json.MarshalIndent(md, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.InfoOnlyFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) UpdateQandAById(id string, qa entities.QAndA) error{
+	file, err := ioutil.ReadFile(r.QAndAFile)
+	if err != nil{
+		return err
+	}
+
+	md := entities.QAndADatabase{}
+	err= json.Unmarshal(file, &md)
+
+	for i, v := range md.QAndA{
+		if v.Id == id{
+			qa.Id = id
+			md.QAndA[i] = qa
+		}
+	}
+	marshal, err := json.MarshalIndent(md, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.QAndAFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error{
+	file, err := ioutil.ReadFile(r.MultipleChoiceFile)
+	if err != nil{
+		return err
+	}
+
+	md := entities.MCDatabase{}
+	err= json.Unmarshal(file, &md)
+
+	for i, v := range md.MultipleChoice{
+		if v.Id == id{
+			mc.Id = id
+			md.MultipleChoice[i] = mc
+		}
+	}
+	marshal, err := json.MarshalIndent(md, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.MultipleChoiceFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) UpdateTorFById(id string, tf entities.TOrF) error {
+	file, err := ioutil.ReadFile(r.TrueOrFalseFile)
+	if err != nil{
+		return err
+	}
+
+	md := entities.TOrFDatabase{}
+	err= json.Unmarshal(file, &md)
+
+	for i, v := range md.TOrF{
+		if v.Id == id{
+			tf.Id = id
+			md.TOrF[i] = tf
+		}
+	}
+	marshal, err := json.MarshalIndent(md, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.TrueOrFalseFile, marshal, 0644)
 	if err != nil{
 		return err
 	}

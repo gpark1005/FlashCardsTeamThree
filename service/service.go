@@ -14,7 +14,11 @@ type Repo interface {
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
 	GetById(id string) (map[string]interface{}, error)
-	UpdateById(id string, m entities.Matching) error
+	UpdateMatchingById(id string, m entities.Matching) error
+	UpdateInfoById(id string, io entities.InfoOnly) error
+	UpdateQandAById(id string, qa entities.QAndA) error
+	UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error
+	UpdateTorFById(id string, tf entities.TOrF) error
 }
 
 type Service struct {
@@ -96,7 +100,47 @@ func (s Service) GetById(id string) (map[string]interface{}, error) {
 
 func (s Service) UpdateByID(id string, m entities.Matching) error{
 
-	err := s.Repo.UpdateById(id, m)
+	err := s.Repo.UpdateMatchingById(id, m)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdateMatchingById(id string, m entities.Matching) error{
+	err := s.Repo.UpdateMatchingById(id, m)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdateInfoById(id string, io entities.InfoOnly) error{
+	err := s.Repo.UpdateInfoById(id, io)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdateQandAById(id string, qa entities.QAndA) error {
+	err := s.Repo.UpdateQandAById(id, qa)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error{
+	err := s.Repo.UpdateMultipleChoiceById(id, mc)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) UpdateTorFById(id string, tf entities.TOrF) error {
+	err := s.Repo.UpdateTorFById(id, tf)
 	if err != nil{
 		return err
 	}

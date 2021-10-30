@@ -199,9 +199,10 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 }
 
 func (r Repo) GetById(id string) (map[string]interface{}, error) {
+
 	db := flashcards{}
 
-	file, err := ioutil.ReadFile(r.Filename)
+	file, err := ioutil.ReadFile()
 	if err != nil {
 		return nil, err
 	}
@@ -345,6 +346,36 @@ func (r Repo) UpdateTorFById(id string, tf entities.TOrF) error {
 		return err
 	}
 	err = ioutil.WriteFile(r.TrueOrFalseFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) DeleteMatchingById (id string) error{
+	m := entities.MatchingDatabase{}
+
+	file, err := ioutil.ReadFile(r.MatchingFile)
+	if err != nil{
+		return err
+	}
+
+	err = json.Unmarshal(file, &m)
+	if err != nil{
+		return err
+	}
+
+	for i, v := range m.Matching{
+		if v.Id == id{
+			m.Matching = append(m.Matching[:i], m.Matching[i+1:]...)
+		}
+	}
+
+	marshal, err := json.MarshalIndent(m, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.MatchingFile, marshal, 0644)
 	if err != nil{
 		return err
 	}

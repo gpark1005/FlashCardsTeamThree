@@ -19,6 +19,7 @@ type Repo interface {
 	UpdateQandAById(id string, qa entities.QAndA) error
 	UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error
 	UpdateTorFById(id string, tf entities.TOrF) error
+	DeleteMatchingById (id string) error
 }
 
 type Service struct {
@@ -141,6 +142,14 @@ func (s Service) UpdateMultipleChoiceById(id string, mc entities.MultipleChoice)
 
 func (s Service) UpdateTorFById(id string, tf entities.TOrF) error {
 	err := s.Repo.UpdateTorFById(id, tf)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) DeleteMatchingById(id string)error{
+	err := s.Repo.DeleteMatchingById(id)
 	if err != nil{
 		return err
 	}

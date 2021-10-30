@@ -13,13 +13,17 @@ type Repo interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	GetById(id string) (map[string]interface{}, error)
+	//GetById(id string) (map[string]interface{}, error)
 	UpdateMatchingById(id string, m entities.Matching) error
 	UpdateInfoById(id string, io entities.InfoOnly) error
 	UpdateQandAById(id string, qa entities.QAndA) error
 	UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error
 	UpdateTorFById(id string, tf entities.TOrF) error
 	DeleteMatchingById (id string) error
+	DeleteInfoOnlyById (id string) error
+	DeleteTOrFById (id string) error
+	DeleteQAndAById (id string) error
+	DeleteMCById (id string) error
 }
 
 type Service struct {
@@ -91,16 +95,15 @@ func (s Service) GetAllFlashcards() (*repo.Database, error) {
 	return fcSlice, nil
 }
 
-func (s Service) GetById(id string) (map[string]interface{}, error) {
-	fc, err := s.Repo.GetById(id)
-	if err != nil{
-		return nil, err
-	}
-	return fc, nil
-}
+//func (s Service) GetById(id string) (map[string]interface{}, error) {
+//	fc, err := s.Repo.GetById(id)
+//	if err != nil{
+//		return nil, err
+//	}
+//	return fc, nil
+//}
 
 func (s Service) UpdateByID(id string, m entities.Matching) error{
-
 	err := s.Repo.UpdateMatchingById(id, m)
 	if err != nil{
 		return err
@@ -150,6 +153,38 @@ func (s Service) UpdateTorFById(id string, tf entities.TOrF) error {
 
 func (s Service) DeleteMatchingById(id string)error{
 	err := s.Repo.DeleteMatchingById(id)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) DeleteInfoOnlyById(id string)error{
+	err := s.Repo.DeleteInfoOnlyById(id)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) DeleteQAndAById(id string)error{
+	err := s.Repo.DeleteQAndAById(id)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) DeleteTOrFById(id string)error{
+	err := s.Repo.DeleteTOrFById(id)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (s Service) DeleteMCById(id string)error{
+	err := s.Repo.DeleteMCById(id)
 	if err != nil{
 		return err
 	}

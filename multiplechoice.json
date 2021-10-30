@@ -1,3 +1,17 @@
 {
-  "MultipleChoice": []
+ "MultipleChoice": [
+  {
+   "Id": "7a4df36f-c700-41f0-bb6e-274dac50179c",
+   "type": "MultipleChoice",
+   "category": "some category",
+   "question": "First question here?",
+   "choices": {
+    "1": "Answer to question.",
+    "2": "Answer to question.",
+    "3": "Answer to question.",
+    "4": "Answer to question."
+   },
+   "answer": "1"
+  }
+ ]
 }

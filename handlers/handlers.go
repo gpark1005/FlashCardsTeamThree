@@ -17,12 +17,17 @@ type Service interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	GetById(id string) (map[string]interface{}, error)
+	//GetById(id string) (map[string]interface{}, error)
 	UpdateMatchingById(id string, m entities.Matching) error
 	UpdateInfoById(id string, io entities.InfoOnly) error
 	UpdateQandAById(id string, qa entities.QAndA) error
 	UpdateMultipleChoiceById(id string, mc entities.MultipleChoice) error
 	UpdateTorFById(id string, tf entities.TOrF) error
+	DeleteMatchingById(id string) error
+	DeleteInfoOnlyById(id string)error
+	DeleteTOrFById (id string) error
+	DeleteQAndAById (id string) error
+	DeleteMCById (id string) error
 }
 
 type FlashcardHandler struct {
@@ -220,31 +225,31 @@ func (fh FlashcardHandler) GetAllFlashcards(w http.ResponseWriter, r *http.Reque
 	_,err = w.Write(fcData)
 }
 
-func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars ["Id"]
-
-	fc, err := fh.Svc.GetById(id)
-	if err != nil{
-		switch err.Error() {
-		case "flashcard does not exist":
-			http.Error(w, err.Error(), http.StatusNotFound)
-		}
-	}
-
-	if err != nil{
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-
-	fcData, err := json.MarshalIndent(fc, "", "	")
-	if err != nil{
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted)
-	_,err = w.Write(fcData)
-}
+//func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
+//	vars := mux.Vars(r)
+//	id := vars ["Id"]
+//
+//	fc, err := fh.Svc.GetById(id)
+//	if err != nil{
+//		switch err.Error() {
+//		case "flashcard does not exist":
+//			http.Error(w, err.Error(), http.StatusNotFound)
+//		}
+//	}
+//
+//	if err != nil{
+//		http.Error(w, err.Error(), http.StatusBadRequest)
+//	}
+//
+//	fcData, err := json.MarshalIndent(fc, "", "	")
+//	if err != nil{
+//		http.Error(w, err.Error(), http.StatusBadRequest)
+//	}
+//
+//	w.Header().Set("Content-Type", "application/json")
+//	w.WriteHeader(http.StatusAccepted)
+//	_,err = w.Write(fcData)
+//}
 
 func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
 	fhId := mux.Vars(r)
@@ -307,3 +312,35 @@ func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
+
+func (fh FlashcardHandler) DeleteByIdHandler (w http.ResponseWriter, r *http.Request) {
+	fhId := mux.Vars(r)
+	id := fhId["Id"]
+
+	err := fh.Svc.DeleteMatchingById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+	err = fh.Svc.DeleteInfoOnlyById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+	err = fh.Svc.DeleteTOrFById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+	err = fh.Svc.DeleteQAndAById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+	err = fh.Svc.DeleteMCById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
+
+
+

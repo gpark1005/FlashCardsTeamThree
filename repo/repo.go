@@ -2,10 +2,7 @@ package repo
 
 import (
 	"encoding/json"
-	"errors"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
-	"reflect"
-
 	//"github.com/gpark1005/FlashCardsTeamThree/infoOnlyRepo"
 	//"github.com/gpark1005/FlashCardsTeamThree/matchingRepo"
 	//"github.com/gpark1005/FlashCardsTeamThree/multiplechoiceRepo"
@@ -198,29 +195,29 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	return &fcSlice, nil
 }
 
-func (r Repo) GetById(id string) (map[string]interface{}, error) {
-
-	db := flashcards{}
-
-	file, err := ioutil.ReadFile()
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(file, &db)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, v := range db.Flashcards{
-		if idCheck, ok := v["Id"]; ok{
-			if idCheck == id{
-				return v, nil
-			}
-		}
-	}
-	return nil, errors.New("flashcard does not exist")
-}
+//func (r Repo) GetById(id string) (map[string]interface{}, error) {
+//
+//	db := flashcards{}
+//
+//	file, err := ioutil.ReadFile()
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	err = json.Unmarshal(file, &db)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	for _, v := range db.Flashcards{
+//		if idCheck, ok := v["Id"]; ok{
+//			if idCheck == id{
+//				return v, nil
+//			}
+//		}
+//	}
+//	return nil, errors.New("flashcard does not exist")
+//}
 
 func (r Repo) UpdateMatchingById(id string, m entities.Matching) error {
 	file, err := ioutil.ReadFile(r.MatchingFile)
@@ -376,6 +373,126 @@ func (r Repo) DeleteMatchingById (id string) error{
 		return err
 	}
 	err = ioutil.WriteFile(r.MatchingFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) DeleteInfoOnlyById (id string) error{
+	i := entities.InfoOnlyDatabase{}
+
+	file, err := ioutil.ReadFile(r.InfoOnlyFile)
+	if err != nil{
+		return err
+	}
+
+	err = json.Unmarshal(file, &i)
+	if err != nil{
+		return err
+	}
+
+	for index, v := range i.InfoOnly{
+		if v.Id == id{
+			i.InfoOnly = append(i.InfoOnly[:index], i.InfoOnly[index+1:]...)
+		}
+	}
+
+	marshal, err := json.MarshalIndent(i, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.InfoOnlyFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) DeleteQAndAById (id string) error{
+	q := entities.QAndADatabase{}
+
+	file, err := ioutil.ReadFile(r.QAndAFile)
+	if err != nil{
+		return err
+	}
+
+	err = json.Unmarshal(file, &q)
+	if err != nil{
+		return err
+	}
+
+	for i, v := range q.QAndA{
+		if v.Id == id{
+			q.QAndA = append(q.QAndA[:i], q.QAndA[i+1:]...)
+		}
+	}
+
+	marshal, err := json.MarshalIndent(q, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.QAndAFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) DeleteTOrFById (id string) error{
+	t := entities.TOrFDatabase{}
+
+	file, err := ioutil.ReadFile(r.TrueOrFalseFile)
+	if err != nil{
+		return err
+	}
+
+	err = json.Unmarshal(file, &t)
+	if err != nil{
+		return err
+	}
+
+	for i, v := range t.TOrF{
+		if v.Id == id{
+			t.TOrF = append(t.TOrF[:i], t.TOrF[i+1:]...)
+		}
+	}
+
+	marshal, err := json.MarshalIndent(t, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.TrueOrFalseFile, marshal, 0644)
+	if err != nil{
+		return err
+	}
+	return nil
+}
+
+func (r Repo) DeleteMCById (id string) error{
+	mc := entities.MCDatabase{}
+
+	file, err := ioutil.ReadFile(r.MultipleChoiceFile)
+	if err != nil{
+		return err
+	}
+
+	err = json.Unmarshal(file, &mc)
+	if err != nil{
+		return err
+	}
+
+	for i, v := range mc.MultipleChoice{
+		if v.Id == id{
+			mc.MultipleChoice = append(mc.MultipleChoice[:i], mc.MultipleChoice[i+1:]...)
+		}
+	}
+
+	marshal, err := json.MarshalIndent(mc, "", " ")
+	if err != nil{
+		return err
+	}
+	err = ioutil.WriteFile(r.MultipleChoiceFile, marshal, 0644)
 	if err != nil{
 		return err
 	}

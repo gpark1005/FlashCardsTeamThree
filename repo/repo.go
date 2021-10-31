@@ -195,29 +195,115 @@ func (r Repo) GetAllFlashcards() (*Database, error) {
 	return &fcSlice, nil
 }
 
-//func (r Repo) GetById(id string) (map[string]interface{}, error) {
-//
-//	db := flashcards{}
-//
-//	file, err := ioutil.ReadFile()
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	err = json.Unmarshal(file, &db)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	for _, v := range db.Flashcards{
-//		if idCheck, ok := v["Id"]; ok{
-//			if idCheck == id{
-//				return v, nil
-//			}
-//		}
-//	}
-//	return nil, errors.New("flashcard does not exist")
-//}
+func (r Repo) GetMatchingById(id string) (*entities.Matching, error) {
+	db := entities.MatchingDatabase{}
+
+	file, err := ioutil.ReadFile(r.MatchingFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, v := range db.Matching{
+		if v.Id == id{
+			return &v, nil
+		}
+	}
+
+	return nil, err
+}
+
+func (r Repo) GetInfoOnlyById(id string) (*entities.InfoOnly, error) {
+	db := entities.InfoOnlyDatabase{}
+
+	file, err := ioutil.ReadFile(r.InfoOnlyFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, v := range db.InfoOnly{
+		if v.Id == id{
+			return &v, nil
+		}
+	}
+
+	return nil, err
+}
+
+func (r Repo) GetQAndAById(id string) (*entities.QAndA, error) {
+	db := entities.QAndADatabase{}
+
+	file, err := ioutil.ReadFile(r.QAndAFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, v := range db.QAndA{
+		if v.Id == id{
+			return &v, nil
+		}
+	}
+
+	return nil, err
+}
+
+func (r Repo) GetTOrFById(id string) (*entities.TOrF, error) {
+	db := entities.TOrFDatabase{}
+
+	file, err := ioutil.ReadFile(r.TrueOrFalseFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, v := range db.TOrF{
+		if v.Id == id{
+			return &v, nil
+		}
+	}
+
+	return nil, err
+}
+
+func (r Repo) GetMultipleChoiceById(id string) (*entities.MultipleChoice, error) {
+	db := entities.MCDatabase{}
+
+	file, err := ioutil.ReadFile(r.MultipleChoiceFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(file, &db)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, v := range db.MultipleChoice{
+		if v.Id == id{
+			return &v, nil
+		}
+	}
+
+	return nil, err
+}
 
 func (r Repo) UpdateMatchingById(id string, m entities.Matching) error {
 	file, err := ioutil.ReadFile(r.MatchingFile)

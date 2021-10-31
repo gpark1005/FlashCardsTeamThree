@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamThree/entities"
 	"github.com/gpark1005/FlashCardsTeamThree/repo"
@@ -17,7 +18,11 @@ type Service interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	//GetById(id string) (map[string]interface{}, error)
+	GetMatchingById(id string) (*entities.Matching, error)
+	GetInfoOnlyById(id string) (*entities.InfoOnly, error)
+	GetQAndAById(id string) (*entities.QAndA, error)
+	GetTOrFById(id string) (*entities.TOrF, error)
+	GetMultipleChoiceById(id string) (*entities.MultipleChoice, error)
 	UpdateMatchingById(id string, m entities.Matching) error
 	UpdateInfoById(id string, io entities.InfoOnly) error
 	UpdateQandAById(id string, qa entities.QAndA) error
@@ -225,31 +230,78 @@ func (fh FlashcardHandler) GetAllFlashcards(w http.ResponseWriter, r *http.Reque
 	_,err = w.Write(fcData)
 }
 
-//func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
-//	vars := mux.Vars(r)
-//	id := vars ["Id"]
-//
-//	fc, err := fh.Svc.GetById(id)
-//	if err != nil{
-//		switch err.Error() {
-//		case "flashcard does not exist":
-//			http.Error(w, err.Error(), http.StatusNotFound)
-//		}
-//	}
-//
-//	if err != nil{
-//		http.Error(w, err.Error(), http.StatusBadRequest)
-//	}
-//
-//	fcData, err := json.MarshalIndent(fc, "", "	")
-//	if err != nil{
-//		http.Error(w, err.Error(), http.StatusBadRequest)
-//	}
-//
-//	w.Header().Set("Content-Type", "application/json")
-//	w.WriteHeader(http.StatusAccepted)
-//	_,err = w.Write(fcData)
-//}
+func (fh FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars ["Id"]
+
+	mFc, err := fh.Svc.GetMatchingById(id)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	ioFc, err := fh.Svc.GetInfoOnlyById(id)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	qaFc, err := fh.Svc.GetQAndAById(id)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	tfFc, err := fh.Svc.GetTOrFById(id)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	mcFc, err := fh.Svc.GetMultipleChoiceById(id)
+	if err != nil{
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	switch {
+	case mFc != nil:
+		mData, err := json.MarshalIndent(mFc, "", "	")
+		if err != nil{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_, err = w.Write(mData)
+	case ioFc != nil:
+		ioData, err := json.MarshalIndent(ioFc, "", "	")
+		if err != nil{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_, err = w.Write(ioData)
+	case qaFc != nil:
+		qaData, err := json.MarshalIndent(qaFc, "", "	")
+		if err != nil{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_, err = w.Write(qaData)
+	case tfFc != nil:
+		tfData, err := json.MarshalIndent(tfFc, "", "	")
+		if err != nil{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_, err = w.Write(tfData)
+	case mcFc != nil:
+		mcData, err := json.MarshalIndent(mcFc, "", "	")
+		if err != nil{
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+		_, err = w.Write(mcData)
+	default:
+		err = errors.New("flashcard not found")
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+
+}
 
 func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
 	fhId := mux.Vars(r)

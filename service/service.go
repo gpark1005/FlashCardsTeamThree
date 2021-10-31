@@ -13,7 +13,11 @@ type Repo interface {
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
 	GetAllFlashcards() (*repo.Database, error)
-	//GetById(id string) (map[string]interface{}, error)
+	GetMatchingById(id string) (*entities.Matching, error)
+	GetInfoOnlyById(id string) (*entities.InfoOnly, error)
+	GetQAndAById(id string) (*entities.QAndA, error)
+	GetTOrFById(id string) (*entities.TOrF, error)
+	GetMultipleChoiceById(id string) (*entities.MultipleChoice, error)
 	UpdateMatchingById(id string, m entities.Matching) error
 	UpdateInfoById(id string, io entities.InfoOnly) error
 	UpdateQandAById(id string, qa entities.QAndA) error
@@ -95,13 +99,45 @@ func (s Service) GetAllFlashcards() (*repo.Database, error) {
 	return fcSlice, nil
 }
 
-//func (s Service) GetById(id string) (map[string]interface{}, error) {
-//	fc, err := s.Repo.GetById(id)
-//	if err != nil{
-//		return nil, err
-//	}
-//	return fc, nil
-//}
+func (s Service) GetMatchingById(id string) (*entities.Matching, error) {
+	fc, err := s.Repo.GetMatchingById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
+}
+
+func (s Service) GetInfoOnlyById(id string) (*entities.InfoOnly, error){
+	fc, err := s.Repo.GetInfoOnlyById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
+}
+
+func (s Service) GetQAndAById(id string) (*entities.QAndA, error){
+	fc, err := s.Repo.GetQAndAById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
+}
+
+func (s Service) GetTOrFById(id string) (*entities.TOrF, error){
+	fc, err := s.Repo.GetTOrFById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
+}
+
+func (s Service) GetMultipleChoiceById(id string) (*entities.MultipleChoice, error){
+	fc, err := s.Repo.GetMultipleChoiceById(id)
+	if err != nil{
+		return nil, err
+	}
+	return fc, nil
+}
 
 func (s Service) UpdateByID(id string, m entities.Matching) error{
 	err := s.Repo.UpdateMatchingById(id, m)

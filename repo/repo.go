@@ -15,7 +15,7 @@ type Database struct {
 	Flashcards []interface{}
 }
 
-type flashcards struct {
+type Flashcards struct {
 	Flashcards []map[string]interface{}
 }
 
@@ -178,19 +178,21 @@ func (r Repo) CreateMultipleChoice(f entities.MultipleChoice) error {
 }
 
 
-func (r Repo) GetAllFlashcards() (*Database, error) {
-	fcSlice := Database{}
+func (r Repo) GetAllFlashcards() (*Flashcards, error) {
+	fcSlice := Flashcards{}
 	files := []string{r.MatchingFile, r.MultipleChoiceFile, r.TrueOrFalseFile, r.QAndAFile, r.InfoOnlyFile}
 
 	for _, v := range files {
+		var data map[string]interface{}
 		file, err := ioutil.ReadFile(v)
 		if err != nil {
 			return nil, err
 		}
-		err = json.Unmarshal(file, &fcSlice)
+		err = json.Unmarshal(file, &data)
 		if err != nil {
 			return nil, err
 		}
+		fcSlice.Flashcards = append(fcSlice.Flashcards, data)
 	}
 	return &fcSlice, nil
 }

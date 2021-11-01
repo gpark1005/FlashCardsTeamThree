@@ -17,7 +17,7 @@ type Service interface {
 	CreateQAndA(f entities.QAndA) error
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
-	GetAllFlashcards() (*repo.Database, error)
+	GetAllFlashcards() (*repo.Flashcards, error)
 	GetMatchingById(id string) (*entities.Matching, error)
 	GetInfoOnlyById(id string) (*entities.InfoOnly, error)
 	GetQAndAById(id string) (*entities.QAndA, error)
@@ -44,7 +44,6 @@ func NewFlashcardHandler(s Service) FlashcardHandler {
 		s,
 	}
 }
-//var FcType map[string]interface{}
 
 func (fh FlashcardHandler) PostFlashcardHandler(w http.ResponseWriter, r *http.Request) {
 	cType := entities.FcType{}

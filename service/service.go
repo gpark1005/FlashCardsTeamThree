@@ -12,7 +12,7 @@ type Repo interface {
 	CreateQAndA(f entities.QAndA) error
 	CreateTOrF(f entities.TOrF) error
 	CreateMultipleChoice(f entities.MultipleChoice) error
-	GetAllFlashcards() (*repo.Database, error)
+	GetAllFlashcards() (*repo.Flashcards, error)
 	GetMatchingById(id string) (*entities.Matching, error)
 	GetInfoOnlyById(id string) (*entities.InfoOnly, error)
 	GetQAndAById(id string) (*entities.QAndA, error)
@@ -91,7 +91,7 @@ func (s Service) CreateMultipleChoice(f entities.MultipleChoice) error {
 }
 
 
-func (s Service) GetAllFlashcards() (*repo.Database, error) {
+func (s Service) GetAllFlashcards() (*repo.Flashcards, error) {
 	fcSlice, err := s.Repo.GetAllFlashcards()
 	if err != nil {
 		return nil, err

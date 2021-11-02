@@ -358,7 +358,11 @@ func (fh FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request){
 			return
 		}
 		err = fh.Svc.UpdateMultipleChoiceById(id, fcMultipleChoice)
+	default:
+		err = errors.New("flashcard not found")
+		http.Error(w, err.Error(), http.StatusNotFound)
 	}
+
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -388,10 +392,8 @@ func (fh FlashcardHandler) DeleteByIdHandler (w http.ResponseWriter, r *http.Req
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
+	http.Error(w, err.Error() , http.StatusNoContent)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 }
-
-
-

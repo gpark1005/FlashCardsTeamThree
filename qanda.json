@@ -1,18 +1,18 @@
 {
-	"QAndA": [
-		{
-			"Id": "528837d9-357c-4bac-87a9-49fd88db88eb",
-			"type": "QAndA",
-			"category": "some category",
-			"question": "First question here?",
-			"answer": "Answer to question."
-		},
-		{
-			"Id": "20a42496-ea50-4d9b-a7ac-6dc4c63f1eae",
-			"type": "QAndA",
-			"category": "Golang",
-			"question": "What is a variable?",
-			"answer": "Answer to question."
-		}
-	]
+ "QAndA": [
+  {
+   "Id": "528837d9-357c-4bac-87a9-49fd88db88eb",
+   "type": "QAndA",
+   "category": "some category",
+   "question": "First question here?",
+   "answer": "Answer to question."
+  },
+  {
+   "Id": "20a42496-ea50-4d9b-a7ac-6dc4c63f1eae",
+   "type": "QAndA",
+   "category": "Golang",
+   "question": "What is a variable?",
+   "answer": "Answer to question."
+  }
+ ]
 }

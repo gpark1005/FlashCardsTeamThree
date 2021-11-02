@@ -11,8 +11,15 @@
    "Id": "19ac2c97-5e30-434d-8bff-010c7307abfa",
    "type": "TOrF",
    "category": "Golang",
-   "question": "An interface contains fields to store data",
-   "answer": "false"
+   "question": "more new information",
+   "answer": "true"
+  },
+  {
+   "Id": "850489d8-6649-49f3-8184-9878dd5d886c",
+   "type": "TOrF",
+   "category": "some category",
+   "question": "First question here?",
+   "answer": "true"
   }
  ]
 }

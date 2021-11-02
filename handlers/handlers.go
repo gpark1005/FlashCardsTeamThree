@@ -374,24 +374,25 @@ func (fh FlashcardHandler) DeleteByIdHandler (w http.ResponseWriter, r *http.Req
 
 	err := fh.Svc.DeleteMatchingById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	err = fh.Svc.DeleteInfoOnlyById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	err = fh.Svc.DeleteTOrFById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	err = fh.Svc.DeleteQAndAById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	err = fh.Svc.DeleteMCById(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
+	err = errors.New("no flashcard found")
 	http.Error(w, err.Error() , http.StatusNoContent)
 
 	w.Header().Set("Content-Type", "application/json")

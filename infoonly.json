@@ -1,16 +1,3 @@
 {
- "InfoOnly": [
-  {
-   "Id": "1a7856d4-ae0f-45bc-92be-3a9e24b4e00f",
-   "type": "InfoOnly",
-   "category": "some category",
-   "information": "information about code"
-  },
-  {
-   "Id": "b55c314a-d15b-424e-9453-24362ab86527",
-   "type": "InfoOnly",
-   "category": "golang",
-   "information": "structs are excellent for holding concrete data"
-  }
- ]
+ "InfoOnly": []
 }

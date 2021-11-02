@@ -17,12 +17,25 @@
    "Id": "8d931895-3bf2-42c6-9f28-16c8c29a0178",
    "type": "MultipleChoice",
    "category": "golang",
-   "question": "What is a Struct in Golang?",
+   "question": "What is a interface in Golang?",
    "choices": {
-    "1": "Answer to question.",
-    "2": "Answer to question.",
-    "3": "Answer to question.",
-    "4": "Answer to question."
+    "1": "Answer to question 1.",
+    "2": "Answer to question 2.",
+    "3": "Answer to question 4.",
+    "4": "Answer to question 3."
+   },
+   "answer": "1"
+  },
+  {
+   "Id": "4d0488bd-c71d-4384-88e2-816e3ffcb619",
+   "type": "MultipleChoice",
+   "category": "some category",
+   "question": "First question here?",
+   "choices": {
+    "1": "Answer to question 1.",
+    "2": "Answer to question 2.",
+    "3": "Answer to question 3.",
+    "4": "Answer to question 4."
    },
    "answer": "1"
   }
